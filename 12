@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Website Example</title>
+</head>
+<body>
+  <h1>Welcome to the Dynamic Website!</h1>
+  <p id="message">This message will be changed dynamically using JavaScript.</p>
+  <button onclick="changeMessage()">Click me!</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
