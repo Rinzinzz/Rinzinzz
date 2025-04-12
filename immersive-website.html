@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Immersive Website</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to right, #007bff, #00d4ff);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: slideDown 1s ease-in-out;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            background: url('https://source.unsplash.com/1600x900/?nature,technology') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            animation: fadeIn 2s ease-in-out;
+        }
+        #hero h2 {
+            font-size: 48px;
+            margin: 0;
+        }
+        #hero p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        #hero button {
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #hero button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 50px 20px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 1s ease-in-out forwards;
+        }
+        #about {
+            animation-delay: 0.5s;
+        }
+        #portfolio {
+            animation-delay: 1s;
+        }
+        #contact {
+            animation-delay: 1.5s;
+        }
+
+        /* Portfolio Section */
+        .portfolio-item {
+            display: inline-block;
+            margin: 10px;
+            width: 200px;
+            height: 200px;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .portfolio-item:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        /* Chatbot Button */
+        #chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #chat-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ddd;
+            background: white;
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease-in-out;
+        }
+        #chat-container.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+        #chat-header {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        #chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        #chat-input input {
+            flex: 1;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        #chat-input button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Website</h1>
+        <nav>
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <h2>Welcome to My Website</h2>
+        <p>Your one-stop platform to know more about me and my work.</p>
+        <button>Explore More</button>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hi, I'm Rinzinzz, a passionate developer and designer. I love building dynamic and immersive experiences.</p>
+    </section>
+
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        <div class="portfolio-item">Project 1</div>
+        <div class="portfolio-item">Project 2</div>
+        <div class="portfolio-item">Project 3</div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>Email: <a href="mailto:rdorji878@gmail.com">rdorji878@gmail.com</a></p>
+    </section>
+
+    <div id="chat-container">
+        <div id="chat-header">Chat with Me</div>
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <input type="text" placeholder="Type a message">
+            <button>Send</button>
+        </div>
+    </div>
+
+    <button id="chat-toggle">💬</button>
+
+    <script>
+        // Chat toggle functionality
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatContainer = document.getElementById('chat-container');
+
+        chatToggle.addEventListener('click', () => {
+            chatContainer.classList.toggle('active');
+        });
+
+        // Chatbot Logic (Simulated)
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.querySelector('#chat-input input');
+        const chatSendButton = document.querySelector('#chat-input button');
+
+        chatSendButton.addEventListener('click', () => {
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
+
+            chatMessages.innerHTML += `<div>User: ${userMessage}</div>`;
+            chatInput.value = '';
+            
+            // Simulate ChatGPT response
+            setTimeout(() => {
+                chatMessages.innerHTML += `<div>Bot: I'm here to assist you with any query!</div>`;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
