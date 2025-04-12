@@ -1,15 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Website Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GitHub Page</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #changeTextButton {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #changeTextButton:hover {
+            background-color: #367c39;
+            transform: translateY(-2px);
+        }
+        #dynamicText {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e65100;
+            animation: fadeIn 1s ease, pulse 2s infinite alternate;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        .favorite-things {
+            text-align: left;
+            margin-top: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards, slideInLeft 0.5s ease;
+        }
+        .favorite-things h2 {
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .favorite-things ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .favorite-things li {
+            margin-bottom: 5px;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+        .favorite-things li:hover {
+            transform: translateX(10px);
+        }
+        .hobby-section {
+            text-align: left;
+            margin-top: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards, slideInRight 0.5s ease;
+        }
+        .hobby-section h2 {
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .hobby-section p {
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Chatbot Styles */
+        #chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(100px);
+            opacity: 0;
+        }
+        #chat-container.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        #chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            border-bottom: 1px solid #0056b3;
+        }
+        #chat-messages {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9f9;
+        }
+        #chat-input-area {
+            padding: 10px;
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+        #chat-input {
+            flex-grow: 1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 8px;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        #chat-send-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #chat-send-button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-bottom: 5px;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #e2f3ff;
+            color: #004080;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #d4edda;
+            color: #155724;
+            align-self: flex-start;
+        }
+        .chat-closed {
+            height: auto;
+        }
+        .chat-closed #chat-messages,
+        .chat-closed #chat-input-area {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome to the Dynamic Website!</h1>
-  <p id="message">This message will be changed dynamically using JavaScript.</p>
-  <button onclick="changeMessage()">Click me!</button>
+    <header>
+        <h1>Welcome to My GitHub Page</h1>
+    </header>
+    <main>
+        <p>This is a simple website hosted on GitHub Pages.</p>
+        <p id="dynamicText">You can add your HTML, CSS, and JavaScript files here.</p>
+        <button id="changeTextButton">Change Text</button>
 
-  <script src="script.js"></script>
+        <section class="favorite-things">
+            <h2>My Favorite Things</h2>
+            <ul>
+                <li>Reading books</li>
+                <li>Watching movies</li>
+                <li>Traveling to new places</li>
+                <li>Listening to music</li>
+                <li>Spending time with family and friends</li>
+            </ul>
+        </section>
+
+        <section class="hobby-section">
+            <h2>My Hobby: Photography</h2>
+            <p>
+                I am passionate about photography. I love capturing moments and expressing myself through
+                the lens. Whether it's landscapes, portraits, or street photography, I find joy in
+                exploring the world and creating visual stories. I also enjoy editing photos and
+                experimenting with different techniques to achieve unique and artistic results.
+            </p>
+        </section>
+
+    </main>
+    <footer>
+        <p>&copy; 2024 My GitHub Page</p>
+    </footer>
+
+    <div id="chat-container" class="chat-closed">
+        <div id="chat-header">Chat with Bot</div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type your message...">
+            <button id="chat-send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const changeTextButton = document.getElementById("changeTextButton");
+        const dynamicText = document.getElementById("dynamicText");
+        const chatContainer = document.getElementById("chat-container");
+        const chatHeader = document.getElementById("chat-header");
+        const chatMessages = document.getElementById("chat-messages");
+        const chatInput = document.getElementById("chat-input");
+        const chatSendButton = document.getElementById("chat-send-button");
+
+        let chatOpen = false;
+
+        changeTextButton.addEventListener("click", function() {
+            dynamicText.textContent = "The text has been changed!";
+        });
+
+        chatHeader.addEventListener("click", function() {
+            chatOpen = !chatOpen;
+            if (chatOpen) {
+                chatContainer.classList.remove("chat-closed");
+                chatContainer.classList.add("show");
+            } else {
+                chatContainer.classList.remove("show");
+                chatContainer.classList.add("chat-closed");
+            }
+        });
+
+        chatSendButton.addEventListener("click", function() {
+            const message = chatInput.value;
+            if (message.trim() === "") return;
+
+            chatMessages.innerHTML += `<div class="message user-message">${message}</div>`;
+            chatInput.value = "";
+
+            setTimeout(function() {
+                chatMessages.innerHTML += `<div class="message bot-message">This is a simulated response.</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        });
+
+        chatInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                chatSendButton.click();
+            }
+        });
+
+        setTimeout(() => {
+            chatContainer.classList.add('show');
+        }, 2000);
+
+    </script>
 </body>
 </html>
+
